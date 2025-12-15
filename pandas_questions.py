@@ -89,7 +89,8 @@ def compute_referendum_result_by_regions(referendum_and_areas):
     """
     cols = ["Registered", "Abstentions", "Null", "Choice A", "Choice B"]
     result = referendum_and_areas.groupby("code_reg")[cols].sum()
-    result["name_reg"] = referendum_and_areas.groupby("code_reg")["name_reg"].first()
+    grouped = referendum_and_areas.groupby("code_reg")["name_reg"].first()
+    result["name_reg"] = grouped
     return result[["name_reg"] + cols]
 
     # return pd.DataFrame({})
