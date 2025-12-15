@@ -30,20 +30,16 @@ def merge_regions_and_departments(regions, departments):
     """
     departments = departments.copy()
     regions = regions.copy()
-
     # Convert codes to strings (keep original for 2A/2B)
     departments["code"] = departments["code"].astype(str)
     departments["region_code"] = departments["region_code"].astype(str)
     regions["code"] = regions["code"].astype(str)
-
-
     df = departments.merge(
         regions,
         left_on="region_code",
         right_on="code",
         how="inner"
     )
-
     return df.rename(
         columns={
             "region_code": "code_reg",
