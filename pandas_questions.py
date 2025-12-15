@@ -62,10 +62,13 @@ def merge_referendum_and_areas(referendum, regions_and_departments):
     """
     referendum = referendum.copy()
     # Ensure department codes are strings with leading zeros
-    referendum["Department code"] = referendum["Department code"].astype(str).str.zfill(2)
+    dept = referendum["Department code"].astype(str)
+    referendum["Department code"] = dept.str.zfill(2)
 
     # Drop DOM-TOM-COM and French abroad (codes containing 'Z')
-    referendum = referendum[~referendum["Department code"].str.contains("Z")]
+    referendum = referendum[
+        ~referendum["Department code"].str.contains("Z")
+    ]
 
     df = referendum.merge(
         regions_and_departments,
@@ -143,4 +146,3 @@ if __name__ == "__main__":
 
     plot_referendum_map(referendum_results)
     plt.show()
-
